@@ -19,7 +19,8 @@ const taskSchema=mongoose.Schema({
         default:false
     },
     user:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required:true
     }
 },{timeStamps:true})

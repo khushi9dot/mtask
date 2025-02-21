@@ -22,4 +22,11 @@ const veriftJWT=asyncHandler(async(req ,res ,next)=>{
     }
 })
 
-export{veriftJWT}
+const isAdmin=(req,res,next)=>{
+    if(req.user.role !== "admin"){
+        return next(apiError.unAuthorized(401,"access denied! only admin allowed.!!"))
+    }
+    next();
+}
+
+export{veriftJWT,isAdmin}
