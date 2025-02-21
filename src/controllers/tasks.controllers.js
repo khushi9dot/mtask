@@ -90,4 +90,15 @@ const deleteTask=asyncHandler(async(req,res,next)=>{
     .json(new apiResponse(200,{},"Task deleted successfully..."))
 })
 
-export {addTask,getTask,updateTask,deleteTask}
+const getAllTasks=asyncHandler(async(req,res,next)=>{
+    const alltask=await Task.find()
+
+    if(!alltask){
+        return next(apiError.badRequest("Tasks are not fetched!!"))
+    }
+
+    res.status(200)
+    .json(new apiResponse(200,alltask,"All Tasks are fetched successfully"))
+})
+
+export {addTask,getTask,updateTask,deleteTask,getAllTasks}
