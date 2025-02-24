@@ -9,16 +9,14 @@ const userSchema=mongoose.Schema({
         unique:true
     },
     fullname:{
-        type:String,
-        required:true
+        type:String
     },
     email:{
         type:String,
         required:true
     },
     mno:{
-        type:String,
-        required:true
+        type:String
     },
     password:{
         type:String,
@@ -29,8 +27,13 @@ const userSchema=mongoose.Schema({
     },
     role:{
         type:String,
-        enum:["user","admin"],
+        enum:["user","admin","subadmin"],
         default:"user"
+    },
+    subadmin:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:function(){return this.role === "user";}
     }
 },{timeStamps:true})
 

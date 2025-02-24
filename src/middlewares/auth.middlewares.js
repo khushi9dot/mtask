@@ -3,7 +3,7 @@ import { apiError } from "../utils/apiError.utils.js";
 import { User } from "../models/users.models.js";
 import jwt from "jsonwebtoken"
 
-const veriftJWT=asyncHandler(async(req ,res ,next)=>{
+const verifyJWT=asyncHandler(async(req ,res ,next)=>{
     try {
         const token= req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
     
@@ -29,4 +29,22 @@ const isAdmin=(req,res,next)=>{
     next();
 }
 
-export{veriftJWT,isAdmin}
+const isSubadmin=(req,res,next)=>{
+    if(req.user.role !== "subadmin"){
+        return next(apiError.unAuthorized(401,"access denied! only subadmins are allowed.!!"))
+    }
+    next();
+}
+
+const isUserOrAdmin=(req,res,next)=>{
+    if(req.user.role === "admin"){
+        return next();
+    }
+
+    if(req.user._id.toString() !== req.params._id){
+        return next(apiError.unAuthorized(401,"access denied! you can only access your own data.!!"))
+    }
+    next();
+}
+
+export{verifyJWT,isAdmin,isSubadmin,isUserOrAdmin}
