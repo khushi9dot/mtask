@@ -34,6 +34,12 @@ const userSchema=mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:function(){return this.role === "user";}
+    },
+    passwordResetToken:{
+        type:String
+    },
+    passwordResetExpiry:{
+        type:Date
     }
 },{timeStamps:true})
 

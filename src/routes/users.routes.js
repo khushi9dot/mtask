@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { registerUser ,loginUser,logoutUser,getProfile,getAllProfile,getAssignUserProfile,updateProfile,deleteProfile,
         changePassword } from "../controllers/users.controllers.js";
+import { forgotPassword,resetPassword } from "../controllers/auth.controllers.js";
 import { isAdmin, verifyJWT } from "../middlewares/auth.middlewares.js";
 
 const router=Router()
@@ -14,5 +15,7 @@ router.route("/getAssignUserProfile").get(verifyJWT,getAssignUserProfile)
 router.route("/updateProfile/:id").patch(verifyJWT,updateProfile)
 router.route("/deleteProfile/:id").delete(verifyJWT,deleteProfile)
 router.route("/changePassword").post(verifyJWT,changePassword)
+router.route("/forgotPassword").post(forgotPassword)
+router.route("/resetPassword").patch(resetPassword)
 
 export default router
